@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Utopia - Search</title>
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fill: rgb(255,255,255);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat';
+            overflow-y: hidden;
+        }
+
+        .container {
+            opacity: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 24px; /* vert horiz */
+            background: rgb(40, 45, 50);
+            color: white;
+            border-bottom: 1px solid rgb(70, 73, 76);
+            
+            transition-duration: 0.5s;
+        }
+
+        .hidden {
+            opacity: 0;
+            margin-top: -54px;
+        }
+
+        .container * {
+            display: inline-block;
+        }
+
+        .site {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 15%;
+
+            white-space: nowrap;
+            overflow: hidden;
+
+            mask-image: linear-gradient(90deg, #000 80%, transparent);
+        }
+
+        .site p {
+            width: 100%;
+            text-align: center;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 12px;
+        }
+
+        svg:not(#nope) {
+            cursor: pointer;
+            transition-duration: 0.2s;
+        }
+
+        svg:hover:not(#nope) {
+            opacity: 0.8;
+            transform: scale(1.2);
+        }
+
+        svg, img {
+            color: white;
+            width: 20px;
+        }
+
+        #reload-btn svg {
+            width: 18px;
+        }
+
+        .divider {
+            border: 1px solid rgba(255,255,255,0.3);
+            height: 24px;
+            margin: 0 15px;
+        }
+
+        .search {
+            background: url("/img/search.svg") top left     no-repeat;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 100px;
+            padding: 12px 18px;
+            outline: none;
+            width: 100%;
+
+            font-family: 'Montserrat';
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.3);
+            color: rgba(255,255,255,0.9);
+            
+            margin: 0 15px;
+            transition-duration: 0.2s;
+
+            font-size: 13px;
+        }
+
+        .search:hover {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgb(33, 34, 37);
+        }
+
+        .search:active {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .search::placeholder {
+            color: rgb(165, 165, 165);
+        }
+
+        .extra {
+            display: flex;
+            gap: 20px;
+        }
+
+        iframe {
+            display: block;
+            user-select: none;
+            width: 100%;
+            height: calc(100vh - 54px);
+            border: none;
+        }
+
+        #nope {
+            opacity: 0.5;
+        }
+
+    </style>
+    <script src="/js/all.js"></script>
+    <script>
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+        if(params.url){
+            localStorage.setItem("tabUrl", decodeURIComponent(params.url));
+            location.replace("?");
+        }
+        var pop = false;
+        const dynamicP = true;
+        const pUrl = "https://eavesdropthenashame.com/ez39tw46?key=0b9b07bdc9f31006ec024072c7306d8a";
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RD0VC48YMW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', 'G-RD0VC48YMW');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <span class="site">
+            <img id="site-icon" onerror="if (this.src != '/img/web.svg') this.src = '/img/web.svg';" src="/favicon.ico">
+            <p id="site-title">Utopia Tabs</p>
+        </span>
+
+        <div class="divider"></div>
+
+        <div class="navigation">
+            <svg title="Back" onclick="historyBack()" id="nope" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.336"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C7.10536 12.5196 7 12.2652 7 12C7 11.7348 7.10536 11.4804 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z" fill="var(--fill)"></path> </g></svg>
+
+            <svg title="Forward" onclick="historyForward()" id="nope" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="var(--fill)"></path> </g></svg>
+
+            <span style="display: flex" id="reload-btn" onclick="stopOrReload()">
+                <svg title="Reload" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)" style="
+                rotate: 45deg;
+                "><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="var(--fill)" d="M7.248 1.307A.75.75 0 118.252.193l2.5 2.25a.75.75 0 010 1.114l-2.5 2.25a.75.75 0 01-1.004-1.114l1.29-1.161a4.5 4.5 0 103.655 2.832.75.75 0 111.398-.546A6 6 0 118.018 2l-.77-.693z"></path></g></svg>
+            </span>
+        </div>
+
+        <input class="search"  id="url-input" placeholder="Search here..." onkeypress="handleEnter(event)"></input>
+
+        <div class="extra">
+            <svg title="Home" onclick="goHome()" viewBox="-0.96 -0.96 17.92 17.92" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="var(--fill)" stroke-width="1.6"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z"></path> </g></svg>
+
+            <svg title="Hide this bar" onclick="hideBar()" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Edit / Hide"> <path id="Vector" d="M3.99989 4L19.9999 20M16.4999 16.7559C15.1473 17.4845 13.6185 17.9999 11.9999 17.9999C8.46924 17.9999 5.36624 15.5478 3.5868 13.7788C3.1171 13.3119 2.88229 13.0784 2.7328 12.6201C2.62619 12.2933 2.62616 11.7066 2.7328 11.3797C2.88233 10.9215 3.11763 10.6875 3.58827 10.2197C4.48515 9.32821 5.71801 8.26359 7.17219 7.42676M19.4999 14.6335C19.8329 14.3405 20.138 14.0523 20.4117 13.7803L20.4146 13.7772C20.8832 13.3114 21.1182 13.0779 21.2674 12.6206C21.374 12.2938 21.3738 11.7068 21.2672 11.38C21.1178 10.9219 20.8827 10.6877 20.4133 10.2211C18.6338 8.45208 15.5305 6 11.9999 6C11.6624 6 11.3288 6.02241 10.9999 6.06448M13.3228 13.5C12.9702 13.8112 12.5071 14 11.9999 14C10.8953 14 9.99989 13.1046 9.99989 12C9.99989 11.4605 10.2135 10.9711 10.5608 10.6113" stroke="var(--fill)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
+        </div>
+    </div>
+
+    <iframe id="webview" src=""></iframe>
+
+    <script src="/classes/balance.js"></script>
+    <script src="/classes/calculus.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
