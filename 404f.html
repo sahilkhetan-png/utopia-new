@@ -1,0 +1,511 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Utopia - Use Our Proxy Directly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: rgb(110, 140, 150);
+      --primary-color-light: rgb(130, 160, 170);
+      --primary-color-dark: rgb(90, 120, 130);
+      --accent-color: rgb(200, 230, 240);
+      --bg-dark: rgb(15, 20, 25);
+      --card-bg: rgba(30, 35, 40, 0.85);
+      --text-light: rgb(230, 230, 230);
+      --text-muted: rgb(180, 180, 180);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Raleway', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: linear-gradient(135deg, rgba(20, 30, 40, 0.9), rgba(10, 15, 25, 0.95)), url('/img/space-tint.png');
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat; 
+      background-size: cover;
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Changed from center to enable scrolling */
+      min-height: 100%;
+      padding: 15px;
+      overflow-y: auto; /* Enable vertical scrolling */
+    }
+
+    .container {
+      width: 95%;
+      max-width: 800px;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid rgba(110, 150, 160, 0.3);
+      padding: clamp(15px, 5vw, 40px); /* Responsive padding */
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 
+                  0 0 20px rgba(110, 150, 160, 0.2);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .container::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(110, 150, 160, 0.2), transparent 70%);
+      z-index: -1;
+    }
+
+    .container::after {
+      content: "";
+      position: absolute;
+      bottom: -50px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(110, 150, 160, 0.1), transparent 70%);
+      z-index: -1;
+    }
+
+    .logo {
+      margin-bottom: 15px; /* Reduced from 30px */
+      position: relative;
+      display: inline-block;
+    }
+
+    .logo::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+    }
+
+    .logo img {
+      height: min(65px, 15vw); /* Responsive logo size */
+      filter: drop-shadow(0 0 8px rgba(110, 150, 160, 0.6));
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: clamp(1.5rem, 5vw, 2.5rem); /* Responsive font size */
+      font-weight: 700;
+      margin-bottom: 15px; /* Reduced from 20px */
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      margin-bottom: 15px; /* Reduced from 20px */
+      line-height: 1.5;
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Responsive font size */
+    }
+
+    strong {
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    .message-box {
+      background-color: rgba(110, 150, 160, 0.1);
+      border-left: 4px solid var(--primary-color);
+      padding: 12px 15px; /* Reduced from 15px 20px */
+      margin: 20px 0; /* Reduced from 30px 0 */
+      text-align: left;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .message-box p {
+      margin-bottom: 0;
+      font-size: clamp(0.85rem, 2.2vw, 1rem); /* Responsive font size */
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: 15px; /* Reduced from 20px */
+      margin: 25px 0; /* Reduced from 40px 0 */
+    }
+
+    .feature {
+      padding: 15px; /* Reduced from 25px 20px */
+      background: linear-gradient(145deg, rgba(50, 70, 90, 0.6), rgba(40, 60, 80, 0.4));
+      border-radius: 12px;
+      border: 1px solid rgba(110, 150, 160, 0.2);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .feature:hover {
+      transform: translateY(-3px); /* Reduced from -5px */
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      border-color: rgba(110, 150, 160, 0.4);
+    }
+
+    .feature .icon {
+      font-size: 1.8rem; /* Reduced from 2rem */
+      color: var(--primary-color);
+      margin-bottom: 10px; /* Reduced from 15px */
+    }
+
+    .feature h3 {
+      color: var(--primary-color-light);
+      margin-bottom: 8px; /* Reduced from 10px */
+      font-weight: 600;
+      font-size: clamp(1.1rem, 3vw, 1.3rem); /* Responsive font size */
+    }
+
+    .feature p {
+      font-size: clamp(0.8rem, 2vw, 0.95rem); /* Responsive font size */
+      margin-bottom: 0;
+      color: var(--text-muted);
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px; /* Reduced from 15px */
+      margin-top: 20px; /* Reduced from 30px */
+    }
+
+    .btn {
+      padding: clamp(10px, 3vw, 14px) clamp(15px, 5vw, 24px); /* Responsive padding */
+      border-radius: 8px;
+      border: none;
+      font-size: clamp(0.9rem, 2.8vw, 1.1rem); /* Responsive font size */
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      font-family: 'Raleway', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+      color: white;
+      box-shadow: 0 4px 15px rgba(110, 140, 150, 0.4);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .primary-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary-color-light), var(--primary-color));
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+
+    .primary-btn:hover::before {
+      opacity: 1;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(110, 140, 150, 0.5);
+    }
+
+    .secondary-btn {
+      background: rgba(80, 105, 130, 0.2);
+      color: var(--text-light);
+      border: 1px solid rgba(110, 150, 160, 0.3);
+    }
+
+    .secondary-btn:hover {
+      background: rgba(100, 125, 150, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      border-color: rgba(110, 150, 160, 0.5);
+    }
+
+    .footer {
+      margin-top: 20px; /* Reduced from 40px */
+      font-size: 0.85rem; /* Reduced from 0.9rem */
+      color: var(--text-muted);
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(110, 150, 160, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(110, 150, 160, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(110, 150, 160, 0);
+      }
+    }
+
+    /* Extra small screens adjustment */
+    @media (max-height: 600px) {
+      .features {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+      
+      .feature {
+        width: min(180px, 30%);
+        padding: 10px;
+      }
+      
+      .feature .icon {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+      }
+      
+      .feature h3 {
+        font-size: 1rem;
+        margin-bottom: 5px;
+      }
+      
+      .feature p {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Very small screens/iframe adjustments */
+    @media (max-height: 400px) {
+      body {
+        padding: 5px;
+        justify-content: flex-start;
+      }
+      
+      .container {
+        padding: 12px;
+        margin: 5px 0;
+      }
+      
+      .logo {
+        margin-bottom: 10px;
+      }
+      
+      .logo img {
+        height: 40px;
+      }
+      
+      .logo::after {
+        bottom: -5px;
+        height: 2px;
+      }
+      
+      h1 {
+        margin-bottom: 10px;
+      }
+      
+      .message-box {
+        margin: 10px 0;
+        padding: 8px 12px;
+      }
+      
+      .features {
+        margin: 10px 0;
+      }
+      
+      .buttons {
+        margin-top: 10px;
+        gap: 8px;
+      }
+      
+      .footer {
+        margin-top: 10px;
+      }
+    }
+
+    /* Handle extremely small iframes */
+    @media (max-height: 300px) {
+      .features {
+        display: none; /* Hide features on extremely small heights */
+      }
+      
+      .message-box {
+        margin: 5px 0;
+      }
+      
+      h1 {
+        font-size: 1.3rem;
+        margin-bottom: 5px;
+      }
+      
+      p {
+        margin-bottom: 5px;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Responsive width adjustments */
+    @media (max-width: 480px) {
+      body {
+        padding: 8px;
+      }
+      
+      .container {
+        width: 98%;
+        padding: 15px 10px;
+      }
+      
+      .btn {
+        padding: 10px 15px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="img/logo.png" alt="Utopia Logo">
+    </div>
+    
+    <h1>Welcome to Utopia</h1>
+    
+    <p>You're trying to access content through our service, but you're currently using it through a third-party website.</p>
+    
+    <div class="message-box">
+      <p><strong>For the best experience:</strong> Use our service directly for faster speeds, better connections, and access to all features.</p>
+    </div>
+    
+    <div class="features">
+      <div class="feature">
+        <div class="icon">
+          <span class="material-symbols-outlined">speed</span>
+        </div>
+        <h3>Lightning Fast</h3>
+        <p>Direct access provides significantly faster loading times</p>
+      </div>
+      
+      <div class="feature">
+        <div class="icon">
+          <span class="material-symbols-outlined">security</span>
+        </div>
+        <h3>More Reliable</h3>
+        <p>Better connection stability with fewer interruptions</p>
+      </div>
+      
+      <div class="feature">
+        <div class="icon">
+          <span class="material-symbols-outlined">devices</span>
+        </div>
+        <h3>Full Features</h3>
+        <p>Access our complete suite of tools and options</p>
+      </div>
+    </div>
+    
+    <div class="buttons">
+      <a href="#" class="btn primary-btn pulse" id="visit-utopia">
+        <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px; font-size: 20px;">rocket_launch</span>
+        Use Utopia Directly
+      </a>
+      <button class="btn secondary-btn" id="continue-anyway">Continue to Original Site</button>
+    </div>
+    
+    <div class="footer">
+      <p>Utopia — The Ultimate Educational Resource & Web Utility</p>
+    </div>
+  </div>
+
+  <script>
+    // Get the URL the user was trying to access
+    const targetUrl = localStorage.getItem("tabUrl");
+    
+    // Handle the "Continue Anyway" button click
+    document.getElementById("continue-anyway").addEventListener("click", function() {
+      // Open ad page in a new tab
+      window.open("https://eavesdropthenashame.com/ez39tw46?key=0b9b07bdc9f31006ec024072c7306d8a", "_blank");
+      
+      // Redirect to the original target URL after a short delay
+      setTimeout(function() {
+        if (targetUrl) {
+          window.open("/s/", "_blank");
+        } else {
+          // If no URL was stored, redirect to home page
+          window.open("/", "_blank");
+        }
+      }, 500);
+    });
+    
+    // Handle the "Visit Utopia" button click
+    document.getElementById("visit-utopia").addEventListener("click", function() {
+      setTimeout(function() {
+        if (targetUrl) {
+          window.open("/s/", "_blank");
+        } else {
+          // If no URL was stored, redirect to home page
+          window.open("/", "_blank");
+        }
+      }, 500);
+    });
+    
+    // Check if we're in an iframe
+    function isInIframe() {
+      try {
+        return window.self !== window.top;
+      } catch (e) {
+        return true;
+      }
+    }
+    
+    // If we're in an iframe, try to break out
+    if (isInIframe()) {
+      try {
+        // Try to make the iframe page take over the whole window
+        window.top.location.href = window.location.href;
+      } catch (e) {
+        console.log("Could not break out of iframe");
+      }
+    }
+    
+    // Add click effect to buttons
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+      button.addEventListener('mousedown', function() {
+        this.style.transform = 'scale(0.98)';
+      });
+      
+      button.addEventListener('mouseup', function() {
+        this.style.transform = '';
+      });
+      
+      button.addEventListener('mouseleave', function() {
+        this.style.transform = '';
+      });
+    });
+  </script>
+</body>
+</html>
